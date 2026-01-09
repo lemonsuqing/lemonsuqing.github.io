@@ -1,15 +1,12 @@
----
-
-title: 嵌入式 Linux 从零构建全栈手册 (基于 Vexpress-A9) 
-
-date: 2024-01-09 10:00:00 
-
-tags: [嵌入式, Linux, ARM] 
-
-categories: [技术笔记] 
-
-top_img: false  # 如果不想显示顶部大图可以加这行（看主题支持）
-
+title: 01嵌入式 Linux 从零构建全栈手册 (基于 Vexpress-A9)
+tags:
+  - 嵌入式
+  - Linux
+  - ARM
+categories:
+  - 技术笔记
+top_img: false
+date: 2024-01-09 10:00:00
 ---
 
 # 📘 嵌入式 Linux 从零构建全栈手册 (基于 Vexpress-A9)

@@ -38,8 +38,12 @@
     <!-- 右侧：悬浮目录 -->
     <aside class="sidebar">
         <div class="toc-container">
-            <div class="toc-title"><i class="fas fa-list-ul"></i> 文章目录</div>
-            <%- toc(page.content, {list_number: false, max_depth: 3}) %>
+            <div class="toc-title">目录</div> <!-- 英文全大写更具设计感，或者用“目录” -->
+            <%- toc(page.content, {
+                list_number: false,
+                max_depth: 6,
+                min_depth: 1
+            }) %>
         </div>
     </aside>
 </div>
