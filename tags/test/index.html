@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lemonsuqing&#39;s blog</title>
-    <!-- FontAwesome 图标库 -->
+    <!-- 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Fancybox 图片放大库 CSS -->
+    <!-- Fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    
+    <!-- 代码高亮 (JS切换主题时会修改这个href) -->
+    <link id="highlight-css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    
     <!-- 自定义样式 -->
     <link rel="stylesheet" href="/css/style.css">
 <meta name="generator" content="Hexo 8.1.1"></head>
@@ -15,29 +19,27 @@
 
     <!-- 导航栏 -->
     <nav>
-        <!-- 这里会自动读取你在 _config.yml 里设置的 title -->
         <a href="/" class="logo">🚀 lemonsuqing&#39;s blog</a>
         <div class="menu">
             <a href="/"><i class="fas fa-home"></i> 首页</a>
-            
-            <!-- 调整一下顺序，把分类和标签放在一起 -->
-            <a href="/categories"><i class="fas fa-folder-open"></i> 分类</a> <!-- 新增 -->
+            <a href="/categories"><i class="fas fa-folder-open"></i> 分类</a>
             <a href="/tags"><i class="fas fa-tags"></i> 标签</a>
-            
             <a href="/archives"><i class="fas fa-archive"></i> 归档</a>
+            
             <a href="javascript:;" onclick="toggleSearch()"><i class="fas fa-search"></i> 搜索</a>
             
-            <!-- 后台入口 (仅本地可见) -->
-            <a href="/admin" target="_blank" class="admin-btn" style="display:none;"><i class="fas fa-user-cog"></i> 写博客</a>
-            <script>
-                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                    document.querySelector('.admin-btn').style.display = 'inline-flex';
-                }
-            </script>
+            <!-- 主题切换 -->
+            <a href="javascript:;" onclick="toggleTheme()" class="theme-switch" title="切换主题">
+                <i id="theme-icon" class="fas fa-moon"></i>
+            </a>
+
+            <!-- 管理员按钮 (默认隐藏，脚本控制显示) -->
+            <a href="/admin" target="_blank" class="admin-btn" style="display:none; margin-left:10px; color:#facc15; font-weight:bold;">
+                <i class="fas fa-user-cog"></i> 写博客
+            </a>
         </div>
     </nav>
 
-    <!-- 主体内容 -->
     <main class="container">
         <!-- 归档/分类/标签 列表页 -->
 <section>
@@ -93,30 +95,30 @@
 </section>
     </main>
 
-    <!-- 页脚 -->
     <footer>
         <p>&copy; 2026 lemonsuqing</p>
         <p>Powered by Hexo & My Custom Theme</p>
     </footer>
 
-    <!-- 搜索弹窗 (默认隐藏) -->
-    <div id="search-modal" class="search-modal">
+    <!-- 搜索弹窗 -->
+    <div id="search-modal" class="search-modal" style="display:none;">
         <div class="search-box">
             <div class="search-header">
                 <h3><i class="fas fa-search"></i> 站内搜索</h3>
-                <button onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+                <button onclick="toggleSearch()"><i class="fas fa-times" style="color:var(--text-main)"></i></button>
             </div>
-            <input type="text" id="local-search-input" placeholder="请输入关键词...">
+            <input type="text" id="local-search-input" placeholder="输入关键词...">
             <div id="local-search-result"></div>
         </div>
     </div>
 
-    <!-- 脚本区域 -->
-    <!-- 1. Fancybox 图片放大 -->
+    <!-- 脚本 -->
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="/js/search.js"></script>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // 图片灯箱初始化
+            // 1. Fancybox
             const postImages = document.querySelectorAll('.post-body img');
             postImages.forEach(function(img) {
                 const outer = img.outerHTML;
@@ -130,21 +132,55 @@
                 img.parentNode.replaceChild(newTag, img);
             });
             Fancybox.bind("[data-fancybox]", {});
+            
+            // 2. 初始化主题
+            initTheme();
+            
+            // 3. 核心：本地环境显示“写博客”按钮
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                document.querySelector('.admin-btn').style.display = 'inline-flex';
+            }
         });
 
-        // 搜索弹窗开关
         function toggleSearch() {
             const modal = document.getElementById('search-modal');
             if (modal.style.display === 'flex') {
                 modal.style.display = 'none';
             } else {
                 modal.style.display = 'flex';
-                document.getElementById('local-search-input').focus();
+                setTimeout(() => document.getElementById('local-search-input').focus(), 100);
             }
         }
+
+        // --- 主题切换逻辑 ---
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+            updateHighlightStyle(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            updateHighlightStyle(newTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('theme-icon');
+            icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        
+        function updateHighlightStyle(theme) {
+            const link = document.getElementById('highlight-css');
+            // 深色用 Tomorrow Night，浅色用 One Light
+            link.href = theme === 'dark' 
+                ? 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css' 
+                : 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-one-light.min.css';
+        }
     </script>
-    
-    <!-- 2. 引入搜索逻辑 JS -->
-    <script src="/js/search.js"></script>
 </body>
 </html>
