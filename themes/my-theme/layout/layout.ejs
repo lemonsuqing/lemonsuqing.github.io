@@ -6,11 +6,10 @@
     <title><%= page.title ? page.title + ' | ' + config.title : config.title %></title>
     <!-- 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Fancybox 图片放大库 -->
+    <!-- Fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
     
-    <!-- 代码高亮样式 (默认深色: Tomorrow Night) -->
-    <!-- 注意：这里的 id="highlight-css" 是为了JS切换主题时替换用的 -->
+    <!-- 代码高亮 (JS切换主题时会修改这个href) -->
     <link id="highlight-css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     
     <!-- 自定义样式 -->
@@ -27,53 +26,48 @@
             <a href="/tags"><i class="fas fa-tags"></i> 标签</a>
             <a href="/archives"><i class="fas fa-archive"></i> 归档</a>
             
-            <!-- 搜索按钮 -->
             <a href="javascript:;" onclick="toggleSearch()"><i class="fas fa-search"></i> 搜索</a>
             
-            <!-- 主题切换按钮 -->
+            <!-- 主题切换 -->
             <a href="javascript:;" onclick="toggleTheme()" class="theme-switch" title="切换主题">
                 <i id="theme-icon" class="fas fa-moon"></i>
             </a>
 
-            <!-- 后台入口 (默认隐藏，JS检测是本地localhost时才显示) -->
-            <a href="/admin" target="_blank" class="admin-btn" style="display:none; margin-left:10px; color:#facc15;">
+            <!-- 管理员按钮 (默认隐藏，脚本控制显示) -->
+            <a href="/admin" target="_blank" class="admin-btn" style="display:none; margin-left:10px; color:#facc15; font-weight:bold;">
                 <i class="fas fa-user-cog"></i> 写博客
             </a>
         </div>
     </nav>
 
-    <!-- 主体内容 -->
     <main class="container">
         <%- body %>
     </main>
 
-    <!-- 页脚 -->
     <footer>
         <p>&copy; <%= date(new Date(), 'YYYY') %> <%= config.author %></p>
         <p>Powered by Hexo & My Custom Theme</p>
     </footer>
 
-    <!-- 搜索弹窗 (默认隐藏) -->
+    <!-- 搜索弹窗 -->
     <div id="search-modal" class="search-modal" style="display:none;">
         <div class="search-box">
             <div class="search-header">
                 <h3><i class="fas fa-search"></i> 站内搜索</h3>
                 <button onclick="toggleSearch()"><i class="fas fa-times" style="color:var(--text-main)"></i></button>
             </div>
-            <input type="text" id="local-search-input" placeholder="请输入关键词(支持标题、标签、分类)...">
+            <input type="text" id="local-search-input" placeholder="输入关键词...">
             <div id="local-search-result"></div>
         </div>
     </div>
 
-    <!-- 脚本区域 -->
+    <!-- 脚本 -->
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-    <!-- 引入搜索逻辑 -->
     <script src="/js/search.js"></script>
     
     <script>
-        // 页面加载完成后执行
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. 图片放大初始化
+            // 1. Fancybox
             const postImages = document.querySelectorAll('.post-body img');
             postImages.forEach(function(img) {
                 const outer = img.outerHTML;
@@ -88,27 +82,22 @@
             });
             Fancybox.bind("[data-fancybox]", {});
             
-            // 2. 初始化主题 (读取本地存储)
+            // 2. 初始化主题
             initTheme();
             
-            // 3. 管理员按钮显示逻辑 (这就是你要的功能！)
-            // 只有当域名是 localhost 或 127.0.0.1 时，才把按钮显示出来
+            // 3. 核心：本地环境显示“写博客”按钮
             if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                 document.querySelector('.admin-btn').style.display = 'inline-flex';
             }
         });
 
-        // --- 搜索框开关 ---
         function toggleSearch() {
             const modal = document.getElementById('search-modal');
             if (modal.style.display === 'flex') {
                 modal.style.display = 'none';
             } else {
                 modal.style.display = 'flex';
-                // 自动聚焦输入框
-                setTimeout(() => {
-                    document.getElementById('local-search-input').focus();
-                }, 100);
+                setTimeout(() => document.getElementById('local-search-input').focus(), 100);
             }
         }
 
@@ -123,33 +112,23 @@
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            
             updateThemeIcon(newTheme);
             updateHighlightStyle(newTheme);
         }
 
         function updateThemeIcon(theme) {
             const icon = document.getElementById('theme-icon');
-            if (theme === 'dark') {
-                icon.className = 'fas fa-moon'; // 深色模式显示月亮
-            } else {
-                icon.className = 'fas fa-sun';  // 浅色模式显示太阳
-            }
+            icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
         }
         
-        // 切换代码高亮 CSS 文件
         function updateHighlightStyle(theme) {
             const link = document.getElementById('highlight-css');
-            if (theme === 'dark') {
-                // 深色高亮 (Tomorrow Night)
-                link.href = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css';
-            } else {
-                // 浅色高亮 (One Light)
-                link.href = 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-one-light.min.css';
-            }
+            // 深色用 Tomorrow Night，浅色用 One Light
+            link.href = theme === 'dark' 
+                ? 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css' 
+                : 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-one-light.min.css';
         }
     </script>
 </body>

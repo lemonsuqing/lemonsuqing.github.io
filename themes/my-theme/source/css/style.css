@@ -1,30 +1,30 @@
-/* --- 1. 定义全局变量 (主题核心) --- */
+/* --- 1. 定义全局变量 --- */
 :root {
-    /* 默认：深色模式 (Dark Mode) */
-    --bg-color: #0f172a;           /* 深蓝背景 */
-    --card-bg: rgba(30, 41, 59, 0.6); /* 半透明卡片 */
-    --text-main: #f1f5f9;          /* 主文字：白 */
-    --text-sub: #94a3b8;           /* 副文字：灰 */
-    --accent: #38bdf8;             /* 强调色：亮蓝 */
+    /* 深色模式 */
+    --bg-color: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.6);
+    --text-main: #f1f5f9;
+    --text-sub: #94a3b8;
+    --accent: #38bdf8;
     --border: rgba(255,255,255,0.1);
-    --code-bg: #1e293b;            /* 代码块背景 */
-    --code-color: #e2e8f0;         /* 代码文字颜色 */
+    --code-bg: #1e293b;
+    --code-color: #e2e8f0;
     --bg-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 70%);
     --shadow: none;
 }
 
-/* 浅色模式 (Light Mode) - 对应 [data-theme="light"] */
+/* 浅色模式 */
 [data-theme="light"] {
-    --bg-color: #ffffff;           /* 纯白背景 */
-    --card-bg: #ffffff;            /* 卡片背景 */
-    --text-main: #1f2937;          /* 主文字：深灰 */
-    --text-sub: #64748b;           /* 副文字：浅灰 */
-    --accent: #0284c7;             /* 强调色：深蓝 */
-    --border: #e2e8f0;             /* 边框：浅灰 */
-    --code-bg: #f8fafc;            /* 代码块背景：极浅灰 */
-    --code-color: #334155;         /* 代码文字颜色 */
-    --bg-image: none;              /* 浅色模式不需要宇宙背景图 */
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* 加点阴影更有层次 */
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #1e293b;
+    --text-sub: #64748b;
+    --accent: #0284c7;
+    --border: #e2e8f0;
+    --code-bg: #f1f5f9;
+    --code-color: #334155;
+    --bg-image: none;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 /* --- 2. 基础布局 --- */
@@ -37,7 +37,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    transition: background-color 0.3s, color 0.3s; /* 丝滑切换动画 */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -49,7 +49,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--card-bg); /* 跟随主题变色 */
+    background: var(--card-bg);
     backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
@@ -58,17 +58,9 @@ nav {
 }
 nav .logo { font-size: 1.4rem; font-weight: bold; color: var(--accent); }
 nav .menu a { margin-left: 20px; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 5px; }
+.theme-switch { cursor: pointer; margin-left: 20px; font-size: 1.2rem; }
 
-/* 主题切换按钮样式 */
-.theme-switch {
-    cursor: pointer;
-    margin-left: 20px;
-    font-size: 1.2rem;
-    color: var(--text-main);
-}
-.theme-switch:hover { color: var(--accent); }
-
-/* --- 容器 & 布局 --- */
+/* --- 容器 --- */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -95,13 +87,12 @@ nav .menu a { margin-left: 20px; font-size: 0.95rem; display: inline-flex; align
     box-shadow: var(--shadow);
 }
 .card:hover { transform: translateY(-5px); border-color: var(--accent); }
-.card-title { font-size: 1.3rem; margin-bottom: 10px; font-weight: bold; color: var(--text-main); }
+.card-title { font-size: 1.3rem; margin-bottom: 10px; font-weight: bold; }
 .card-meta { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 15px; }
 .card-excerpt { font-size: 0.95rem; color: var(--text-sub); line-height: 1.6; }
 
-/* --- 文章详情页 (解决溢出问题的关键) --- */
+/* --- 文章详情页 --- */
 .post-layout { display: flex; gap: 30px; align-items: flex-start; }
-
 .post-content { 
     flex: 1; 
     background: var(--card-bg); 
@@ -109,85 +100,136 @@ nav .menu a { margin-left: 20px; font-size: 0.95rem; display: inline-flex; align
     border-radius: 16px; 
     border: 1px solid var(--border); 
     box-shadow: var(--shadow);
-    /* 关键属性：防止 flex 子元素被撑爆 */
     min-width: 0; 
     overflow: hidden; 
 }
-
 .sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
 @media (max-width: 900px) {
     .post-layout { flex-direction: column; }
     .sidebar { display: none; }
-    .post-content { padding: 20px; } /* 手机端减小内边距 */
+    .post-content { padding: 20px; }
 }
 
-/* --- 正文排版 & 代码高亮优化 --- */
+/* --- 正文排版 --- */
 .post-header { margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
-.post-header h1 { font-size: 2.2rem; margin: 0 0 15px 0; color: var(--text-main); }
+.post-header h1 { font-size: 2.2rem; margin: 0 0 15px 0; }
 .post-meta { color: var(--text-sub); }
-
 .post-body { line-height: 1.8; color: var(--text-main); font-size: 1.05rem; }
-.post-body h2 { margin-top: 40px; margin-bottom: 20px; padding-left: 10px; border-left: 4px solid var(--accent); color: var(--text-main); }
+.post-body h2 { margin-top: 40px; margin-bottom: 20px; padding-left: 10px; border-left: 4px solid var(--accent); }
 .post-body img { max-width: 100%; border-radius: 8px; margin: 10px 0; display: block; }
-.post-body blockquote { border-left: 4px solid #64748b; margin: 20px 0; padding: 10px 20px; background: rgba(100,100,100,0.1); color: var(--text-sub); }
+.post-body blockquote { border-left: 4px solid #64748b; margin: 20px 0; padding: 10px 20px; background: rgba(125,125,125,0.1); color: var(--text-sub); }
 
-/* --- 代码块核心样式 (修复溢出 & 滚动 & 去掉行号) --- */
-.post-body code {
-    background: rgba(56, 189, 248, 0.1);
-    color: var(--accent);
-    padding: 2px 5px;
-    border-radius: 4px;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 0.9em;
-}
+/* --- 代码块终极修正 (无行号 + 自动换行) --- */
 
-/* Hexo PrismJS 生成的代码块容器 */
+/* 1. 隐藏 Hexo Highlight 可能残留的行号元素 */
+.gutter { display: none !important; }
+.code { border-left: none !important; padding-left: 0 !important; }
+table { border-collapse: collapse; width: 100%; margin: 0; }
+
+/* 2. 代码块容器样式 */
 .post-body pre {
     background: var(--code-bg);
     color: var(--code-color);
     padding: 15px;
     border-radius: 8px;
     border: 1px solid var(--border);
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-family: Consolas, Monaco, monospace;
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.6;
     margin: 20px 0;
     
-    /* 核心修复：强制横向滚动 */
-    overflow-x: auto !important; 
-    white-space: pre; /* 保持不换行，超出部分滚动 */
-    word-wrap: normal;
+    /* 核心：自动换行 */
+    white-space: pre-wrap !important; /* 允许换行 */
+    word-break: break-all !important; /* 允许在单词内换行，防止撑爆 */
+    overflow-x: hidden !important;    /* 隐藏横向滚动条 */
     max-width: 100%;
-    
-    /* 让滚动更丝滑 */
-    -webkit-overflow-scrolling: touch;
 }
 
-/* --- 美化代码块滚动条 (让滚动条更明显) --- */
-.post-body pre::-webkit-scrollbar {
-    height: 8px; /* 滚动条高度 */
-    background-color: transparent;
-}
-
-.post-body pre::-webkit-scrollbar-thumb {
-    background: var(--border); /* 滚动条颜色 */
+/* 3. 行内代码样式 */
+.post-body :not(pre) > code {
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--accent);
+    padding: 2px 5px;
     border-radius: 4px;
+    font-family: Consolas, monospace;
 }
 
-.post-body pre::-webkit-scrollbar-thumb:hover {
-    background: var(--accent); /* 鼠标放上去变色 */
-}
+/* 4. 强制移除 PrismJS 的行号占位 */
+.line-numbers-rows { display: none !important; }
+pre[class*="language-"] { padding-left: 15px !important; }
 
-/* --- 其他组件适配主题 --- */
-.toc-container { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); color: var(--text-main); }
+/* --- 其他 --- */
+.toc-container { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
 .toc-link { color: var(--text-sub); }
 .toc-link:hover, .toc-link.active { color: var(--accent); }
-.search-modal { background: rgba(0,0,0,0.7); }
-[data-theme="light"] .search-modal { background: rgba(255,255,255,0.8); } /* 浅色模式下的遮罩 */
-.search-box { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--accent); }
-#local-search-input { color: var(--text-main); border-bottom: 1px solid var(--border); }
-.search-result-title { color: var(--text-main); }
-.search-result-list li:hover { background: rgba(125,125,125,0.1); }
+
 footer { color: var(--text-sub); border-top: 1px solid var(--border); }
 .category-list-item { background: var(--card-bg); border: 1px solid var(--border); }
 .category-list-link { color: var(--text-main); }
+
+/* --- 搜索弹窗样式修复 (这就是你丢失的部分) --- */
+.search-modal {
+    display: none; /* 默认隐藏，由 JS 控制改为 flex */
+    position: fixed; /* 关键：固定定位，覆盖全屏 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* 深色遮罩 */
+    z-index: 1000; /* 关键：保证在最上层 */
+    backdrop-filter: blur(5px); /* 毛玻璃背景 */
+    
+    /* 关键：Flex 居中 */
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+[data-theme="light"] .search-modal {
+    background: rgba(255, 255, 255, 0.6); /* 浅色模式下的遮罩 */
+}
+
+.search-box {
+    background: var(--card-bg);
+    width: 600px;
+    max-width: 90%;
+    height: 60vh; /* 弹窗高度 */
+    border-radius: 12px;
+    border: 1px solid var(--accent);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.search-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-header h3 { margin: 0; font-size: 1.1rem; color: var(--text-main); }
+.search-header button { background: none; border: none; font-size: 1.2rem; cursor: pointer; }
+
+#local-search-input {
+    width: 100%;
+    padding: 15px 20px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-main);
+    font-size: 1.1rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#local-search-result {
+    flex: 1;
+    overflow-y: auto; /* 内容多了可以滚动 */
+    padding: 0;
+}
+
+.search-result-list { list-style: none; padding: 0; margin: 0; }
+.search-result-list li { border-bottom: 1px solid var(--border); }
+.search-result-list li:hover { background: rgba(125,125,125,0.1); }
+.search-result-title { display: block; padding: 15px 20px; font-weight: bold; color: var(--text-main); }
