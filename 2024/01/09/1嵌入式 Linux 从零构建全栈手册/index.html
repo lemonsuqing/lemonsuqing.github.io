@@ -25,7 +25,12 @@
             <a href="javascript:;" onclick="toggleSearch()"><i class="fas fa-search"></i> 搜索</a>
             
             <!-- 后台入口 (仅本地可见) -->
-            <a href="/admin" target="_blank" class="admin-btn"><i class="fas fa-user-cog"></i> 写博客</a>
+            <a href="/admin" target="_blank" class="admin-btn" style="display:none;"><i class="fas fa-user-cog"></i> 写博客</a>
+            <script>
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    document.querySelector('.admin-btn').style.display = 'inline-flex';
+                }
+            </script>
         </div>
     </nav>
 
