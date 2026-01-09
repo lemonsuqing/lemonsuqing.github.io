@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>123 | lemonsuqing&#39;s blog</title>
+    <!-- FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Fancybox 图片放大库 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="/css/style.css">
+<meta name="generator" content="Hexo 8.1.1"></head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav>
+        <!-- 这里会自动读取你在 _config.yml 里设置的 title -->
+        <a href="/" class="logo">🚀 lemonsuqing&#39;s blog</a>
+        <div class="menu">
+            <a href="/"><i class="fas fa-home"></i> 首页</a>
+            <a href="/archives"><i class="fas fa-archive"></i> 归档</a>
+            
+            <!-- 搜索按钮 -->
+            <a href="javascript:;" onclick="toggleSearch()"><i class="fas fa-search"></i> 搜索</a>
+            
+            <!-- 后台入口 (仅本地可见) -->
+            <a href="/admin" target="_blank" class="admin-btn"><i class="fas fa-user-cog"></i> 写博客</a>
+        </div>
+    </nav>
+
+    <!-- 主体内容 -->
+    <main class="container">
+        <div class="post-layout">
+    <!-- 左侧：文章内容 -->
+    <article class="post-content">
+        <div class="post-header">
+            <h1>123</h1>
+            <div class="post-meta">
+                <span><i class="far fa-calendar"></i> 2026-01-09</span>
+                
+                
+            </div>
+        </div>
+
+        <div class="post-body">
+            
+        </div>
+
+        <div class="post-nav">
+             <div></div> 
+
+            
+        </div>
+    </article>
+
+    <!-- 右侧：悬浮目录 -->
+    <aside class="sidebar">
+        <div class="toc-container">
+            <div class="toc-title"><i class="fas fa-list-ul"></i> 文章目录</div>
+            
+        </div>
+    </aside>
+</div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>&copy; 2026 lemonsuqing</p>
+        <p>Powered by Hexo & My Custom Theme</p>
+    </footer>
+
+    <!-- 搜索弹窗 (默认隐藏) -->
+    <div id="search-modal" class="search-modal">
+        <div class="search-box">
+            <div class="search-header">
+                <h3><i class="fas fa-search"></i> 站内搜索</h3>
+                <button onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+            </div>
+            <input type="text" id="local-search-input" placeholder="请输入关键词...">
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+
+    <!-- 脚本区域 -->
+    <!-- 1. Fancybox 图片放大 -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 图片灯箱初始化
+            const postImages = document.querySelectorAll('.post-body img');
+            postImages.forEach(function(img) {
+                const outer = img.outerHTML;
+                const src = img.getAttribute('src');
+                const alt = img.getAttribute('alt') || 'image';
+                const newTag = document.createElement('a');
+                newTag.href = src;
+                newTag.setAttribute('data-fancybox', 'gallery');
+                newTag.setAttribute('data-caption', alt);
+                newTag.innerHTML = outer;
+                img.parentNode.replaceChild(newTag, img);
+            });
+            Fancybox.bind("[data-fancybox]", {});
+        });
+
+        // 搜索弹窗开关
+        function toggleSearch() {
+            const modal = document.getElementById('search-modal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+                document.getElementById('local-search-input').focus();
+            }
+        }
+    </script>
+    
+    <!-- 2. 引入搜索逻辑 JS -->
+    <script src="/js/search.js"></script>
+</body>
+</html>
