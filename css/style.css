@@ -1,33 +1,39 @@
-/* --- 1. 定义全局变量 --- */
+/* ==========================================================================
+   1. 全局变量定义 (深色/浅色主题核心)
+   ========================================================================== */
 :root {
-    /* 深色模式 */
-    --bg-color: #0f172a;
-    --card-bg: rgba(30, 41, 59, 0.6);
-    --text-main: #f1f5f9;
-    --text-sub: #94a3b8;
-    --accent: #38bdf8;
+    /* --- 深色模式 (默认) --- */
+    --bg-color: #0f172a;           /* 深蓝背景 */
+    --card-bg: rgba(30, 41, 59, 0.6); /* 半透明卡片背景 */
+    --text-main: #f1f5f9;          /* 主文字：白 */
+    --text-sub: #94a3b8;           /* 副文字：灰 */
+    --accent: #38bdf8;             /* 强调色：亮蓝 */
     --border: rgba(255,255,255,0.1);
-    --code-bg: #1e293b;
-    --code-color: #e2e8f0;
+    --code-bg: #1e293b;            /* 代码块背景 */
+    --code-color: #e2e8f0;         /* 代码文字颜色 */
     --bg-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 70%);
     --shadow: none;
+    --tag-bg: rgba(56, 189, 248, 0.1); /* 标签背景色 */
 }
 
-/* 浅色模式 */
+/* --- 浅色模式 (当 html 标签有 data-theme="light" 时生效) --- */
 [data-theme="light"] {
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
-    --text-main: #1e293b;
-    --text-sub: #64748b;
-    --accent: #0284c7;
-    --border: #e2e8f0;
-    --code-bg: #f1f5f9;
-    --code-color: #334155;
+    --bg-color: #f8fafc;           /* 纯白偏灰背景 */
+    --card-bg: #ffffff;            /* 卡片背景 */
+    --text-main: #1e293b;          /* 主文字：深灰 */
+    --text-sub: #64748b;           /* 副文字：浅灰 */
+    --accent: #0284c7;             /* 强调色：深蓝 */
+    --border: #e2e8f0;             /* 边框：浅灰 */
+    --code-bg: #f1f5f9;            /* 代码块背景 */
+    --code-color: #334155;         /* 代码文字颜色 */
     --bg-image: none;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --tag-bg: rgba(2, 132, 199, 0.1);
 }
 
-/* --- 2. 基础布局 --- */
+/* ==========================================================================
+   2. 基础布局与排版
+   ========================================================================== */
 body {
     margin: 0;
     font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
@@ -60,9 +66,9 @@ nav .logo { font-size: 1.4rem; font-weight: bold; color: var(--accent); }
 nav .menu a { margin-left: 20px; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 5px; }
 .theme-switch { cursor: pointer; margin-left: 20px; font-size: 1.2rem; }
 
-/* --- 容器 --- */
+/* --- 主容器 --- */
 .container {
-    max-width: 1200px;
+    max-width: 1280px; /* 加宽容器以容纳更宽的目录 */
     margin: 0 auto;
     padding: 20px;
     flex: 1;
@@ -70,7 +76,18 @@ nav .menu a { margin-left: 20px; font-size: 0.95rem; display: inline-flex; align
     box-sizing: border-box;
 }
 
-/* --- 首页组件 --- */
+/* --- 页脚 --- */
+footer { 
+    text-align: center; 
+    padding: 40px; 
+    color: var(--text-sub); 
+    border-top: 1px solid var(--border); 
+    margin-top: 50px; 
+}
+
+/* ==========================================================================
+   3. 首页与归档页组件
+   ========================================================================== */
 .hero { text-align: center; padding: 60px 20px; }
 .hero h1 { font-size: 3rem; margin-bottom: 10px; color: var(--text-main); }
 .hero p { color: var(--text-sub); font-size: 1.1rem; }
@@ -91,8 +108,11 @@ nav .menu a { margin-left: 20px; font-size: 0.95rem; display: inline-flex; align
 .card-meta { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 15px; }
 .card-excerpt { font-size: 0.95rem; color: var(--text-sub); line-height: 1.6; }
 
-/* --- 文章详情页 --- */
-.post-layout { display: flex; gap: 30px; align-items: flex-start; }
+/* ==========================================================================
+   4. 文章详情页布局 (Flexbox)
+   ========================================================================== */
+.post-layout { display: flex; gap: 40px; align-items: flex-start; }
+
 .post-content { 
     flex: 1; 
     background: var(--card-bg); 
@@ -100,33 +120,118 @@ nav .menu a { margin-left: 20px; font-size: 0.95rem; display: inline-flex; align
     border-radius: 16px; 
     border: 1px solid var(--border); 
     box-shadow: var(--shadow);
-    min-width: 0; 
+    min-width: 0; /* 防止代码块撑爆布局 */
     overflow: hidden; 
 }
-.sidebar { width: 250px; flex-shrink: 0; position: sticky; top: 100px; }
-@media (max-width: 900px) {
+
+/* ==========================================================================
+   5. 侧边栏目录 (极简文档风格)
+   ========================================================================== */
+.sidebar { 
+    width: 300px; /* 加宽宽度 */
+    flex-shrink: 0; 
+    position: sticky; 
+    top: 100px; 
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    scrollbar-width: none; /* 隐藏滚动条但允许滚动 */
+}
+.sidebar::-webkit-scrollbar { display: none; }
+
+.toc-container { 
+    padding: 10px;
+    border-left: 2px solid var(--border); /* 左侧灰线轴 */
+    margin-left: 10px;
+}
+
+.toc-title { 
+    font-weight: 700; 
+    margin-bottom: 15px; 
+    font-size: 0.85rem;
+    padding-left: 15px;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+/* 目录重置 */
+.toc, .toc-child { padding: 0; margin: 0; list-style: none; }
+
+/* 目录链接 */
+.toc-link { 
+    color: var(--text-sub); 
+    font-size: 0.95rem; 
+    display: block; 
+    padding: 6px 0 6px 15px; 
+    border-left: 3px solid transparent; /* 选中指示条预留 */
+    margin-left: -2px; /* 对齐左侧轴线 */
+    transition: 0.2s;
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 子目录缩进与样式 */
+.toc-child .toc-link { 
+    padding-left: 30px; 
+    font-size: 0.9rem; 
+    opacity: 0.9;
+}
+.toc-child .toc-child .toc-link { padding-left: 45px; }
+
+/* 交互效果 */
+.toc-link:hover, .toc-link.active { 
+    color: var(--accent); 
+    border-left-color: var(--accent); /* 左侧亮条 */
+    background: linear-gradient(90deg, var(--tag-bg), transparent);
+}
+
+@media (max-width: 1000px) {
     .post-layout { flex-direction: column; }
     .sidebar { display: none; }
     .post-content { padding: 20px; }
 }
 
-/* --- 正文排版 --- */
+/* ==========================================================================
+   6. 文章正文排版
+   ========================================================================== */
 .post-header { margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
 .post-header h1 { font-size: 2.2rem; margin: 0 0 15px 0; }
 .post-meta { color: var(--text-sub); }
+
 .post-body { line-height: 1.8; color: var(--text-main); font-size: 1.05rem; }
-.post-body h2 { margin-top: 40px; margin-bottom: 20px; padding-left: 10px; border-left: 4px solid var(--accent); }
+.post-body h2 { 
+    margin-top: 50px; 
+    margin-bottom: 20px; 
+    padding-bottom: 10px; 
+    border-bottom: 1px solid var(--border); 
+    font-size: 1.5rem; 
+}
+.post-body h3 { 
+    margin-top: 30px; 
+    margin-bottom: 15px; 
+    font-size: 1.25rem; 
+    color: var(--accent); 
+}
 .post-body img { max-width: 100%; border-radius: 8px; margin: 10px 0; display: block; }
-.post-body blockquote { border-left: 4px solid #64748b; margin: 20px 0; padding: 10px 20px; background: rgba(125,125,125,0.1); color: var(--text-sub); }
+.post-body blockquote { 
+    border-left: 4px solid #64748b; 
+    margin: 20px 0; 
+    padding: 10px 20px; 
+    background: rgba(125,125,125,0.1); 
+    color: var(--text-sub); 
+}
 
-/* --- 代码块终极修正 (无行号 + 自动换行) --- */
-
-/* 1. 隐藏 Hexo Highlight 可能残留的行号元素 */
+/* ==========================================================================
+   7. 代码块样式 (自动换行 + 无行号)
+   ========================================================================== */
+/* 强制隐藏 Hexo Highlight 可能残留的元素 */
 .gutter { display: none !important; }
 .code { border-left: none !important; padding-left: 0 !important; }
 table { border-collapse: collapse; width: 100%; margin: 0; }
 
-/* 2. 代码块容器样式 */
 .post-body pre {
     background: var(--code-bg);
     color: var(--code-color);
@@ -138,62 +243,141 @@ table { border-collapse: collapse; width: 100%; margin: 0; }
     line-height: 1.6;
     margin: 20px 0;
     
-    /* 核心：自动换行 */
-    white-space: pre-wrap !important; /* 允许换行 */
-    word-break: break-all !important; /* 允许在单词内换行，防止撑爆 */
-    overflow-x: hidden !important;    /* 隐藏横向滚动条 */
+    /* 核心：自动换行，防止溢出 */
+    white-space: pre-wrap !important;
+    word-break: break-all !important;
+    overflow-x: hidden !important;
     max-width: 100%;
 }
 
-/* 3. 行内代码样式 */
 .post-body :not(pre) > code {
-    background: rgba(56, 189, 248, 0.1);
+    background: var(--tag-bg);
     color: var(--accent);
-    padding: 2px 5px;
+    padding: 2px 6px;
     border-radius: 4px;
     font-family: Consolas, monospace;
 }
 
-/* 4. 强制移除 PrismJS 的行号占位 */
+/* 隐藏 PrismJS 行号 */
 .line-numbers-rows { display: none !important; }
 pre[class*="language-"] { padding-left: 15px !important; }
 
-/* --- 其他 --- */
-.toc-container { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
-.toc-link { color: var(--text-sub); }
-.toc-link:hover, .toc-link.active { color: var(--accent); }
+/* ==========================================================================
+   8. 标签云 (胶囊样式)
+   ========================================================================== */
+.tag-cloud {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+.tag-cloud a {
+    display: inline-block;
+    padding: 8px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 50px; /* 圆角 */
+    color: var(--text-sub) !important;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 1rem !important;
+}
+.tag-cloud a:hover {
+    background: var(--tag-bg);
+    color: var(--accent) !important;
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
 
-footer { color: var(--text-sub); border-top: 1px solid var(--border); }
-.category-list-item { background: var(--card-bg); border: 1px solid var(--border); }
-.category-list-link { color: var(--text-main); }
+/* ==========================================================================
+   9. 分类列表 (卡片矩阵样式)
+   ========================================================================== */
+.category-list-container { padding: 10px; }
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+.category-list-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 25px;
+    transition: 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.category-list-item::before {
+    content: '\f07b'; /* 图标 */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    font-size: 5rem;
+    color: var(--text-main);
+    opacity: 0.05;
+    transition: 0.3s;
+}
+.category-list-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+.category-list-item:hover::before {
+    opacity: 0.1;
+    transform: scale(1.2);
+}
+.category-list-link {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-main);
+    z-index: 1;
+}
+.category-list-count {
+    background: var(--tag-bg);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    z-index: 1;
+}
+.category-list-child { display: none; }
 
-/* --- 搜索弹窗样式修复 (这就是你丢失的部分) --- */
+/* ==========================================================================
+   10. 搜索弹窗 (修复定位问题)
+   ========================================================================== */
 .search-modal {
-    display: none; /* 默认隐藏，由 JS 控制改为 flex */
-    position: fixed; /* 关键：固定定位，覆盖全屏 */
+    display: none;
+    position: fixed; /* 关键：固定定位 */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* 深色遮罩 */
-    z-index: 1000; /* 关键：保证在最上层 */
-    backdrop-filter: blur(5px); /* 毛玻璃背景 */
-    
-    /* 关键：Flex 居中 */
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
     justify-content: center;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 0;
 }
-
-[data-theme="light"] .search-modal {
-    background: rgba(255, 255, 255, 0.6); /* 浅色模式下的遮罩 */
-}
+[data-theme="light"] .search-modal { background: rgba(255, 255, 255, 0.6); }
 
 .search-box {
     background: var(--card-bg);
     width: 600px;
     max-width: 90%;
-    height: 60vh; /* 弹窗高度 */
+    height: 60vh;
     border-radius: 12px;
     border: 1px solid var(--accent);
     display: flex;
@@ -208,9 +392,7 @@ footer { color: var(--text-sub); border-top: 1px solid var(--border); }
     justify-content: space-between;
     align-items: center;
 }
-.search-header h3 { margin: 0; font-size: 1.1rem; color: var(--text-main); }
-.search-header button { background: none; border: none; font-size: 1.2rem; cursor: pointer; }
-
+.search-header button { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-main); }
 #local-search-input {
     width: 100%;
     padding: 15px 20px;
@@ -222,14 +404,7 @@ footer { color: var(--text-sub); border-top: 1px solid var(--border); }
     outline: none;
     box-sizing: border-box;
 }
-
-#local-search-result {
-    flex: 1;
-    overflow-y: auto; /* 内容多了可以滚动 */
-    padding: 0;
-}
-
+#local-search-result { flex: 1; overflow-y: auto; padding: 0; }
+.search-result-title { display: block; padding: 15px 20px; font-weight: bold; color: var(--text-main); border-bottom: 1px solid var(--border); }
 .search-result-list { list-style: none; padding: 0; margin: 0; }
-.search-result-list li { border-bottom: 1px solid var(--border); }
 .search-result-list li:hover { background: rgba(125,125,125,0.1); }
-.search-result-title { display: block; padding: 15px 20px; font-weight: bold; color: var(--text-main); }
