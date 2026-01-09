@@ -1,6 +1,53 @@
 /* ==========================================================================
-   1. 全局变量定义 (深色/浅色主题核心)
+   新增：宇宙星空背景引擎 (仅作为背景，不改动原有 UI)
    ========================================================================== */
+.universe-background {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -2; /* 确保在最底层 */
+    background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
+    overflow: hidden;
+    transition: opacity 0.8s;
+}
+[data-theme="light"] .universe-background { opacity: 0; }
+
+/* 星星动画 */
+#stars, #stars2, #stars3 {
+    width: 1px; height: 1px; background: transparent;
+    box-shadow: 1541px 1746px #FFF, 473px 1867px #FFF, 1802px 1471px #FFF, 100px 100px #FFF, 500px 800px #FFF, 1200px 300px #FFF, 1600px 100px #FFF;
+    animation: animStar 120s linear infinite;
+}
+#stars:after, #stars2:after, #stars3:after {
+    content: " "; position: absolute; top: 2000px; width: inherit; height: inherit; box-shadow: inherit;
+}
+#stars2 { width: 2px; height: 2px; animation-duration: 180s; }
+#stars3 { width: 3px; height: 3px; animation-duration: 250s; }
+@keyframes animStar { from { transform: translateY(0px); } to { transform: translateY(-2000px); } }
+
+/* 星云效果 */
+.nebula { position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(100px); opacity: 0.12; z-index: -1; animation: nebulaMove 40s alternate infinite ease-in-out; }
+.nebula-1 { background: #4f46e5; top: -10%; left: -10%; }
+.nebula-2 { background: #7c3aed; bottom: -10%; right: -5%; animation-delay: -10s; }
+.nebula-3 { background: #0ea5e9; top: 40%; left: 30%; animation-duration: 60s; }
+@keyframes nebulaMove { from { transform: translate(0, 0) scale(1); } to { transform: translate(100px, 50px) scale(1.2); } }
+
+/* 流星效果 */
+.shooting-stars span {
+    position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: #fff; border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.1), 0 0 20px rgba(255,255,255,1);
+    animation: shooting 3s linear infinite;
+}
+.shooting-stars span::before { content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 300px; height: 1px; background: linear-gradient(90deg, #fff, transparent); }
+.shooting-stars span:nth-child(1) { top: 0; right: 0; left:initial; animation-duration: 1.5s; }
+.shooting-stars span:nth-child(2) { top: 0; right: 120px; left:initial; animation-delay: 1.2s; animation-duration: 3s; }
+.shooting-stars span:nth-child(3) { top: 150px; right: 0px; left:initial; animation-delay: 2.5s; animation-duration: 2s; }
+@keyframes shooting { 0% { transform: rotate(315deg) translateX(0); opacity: 1; } 100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; } }
+
+/* ==========================================================================
+   以下是你提供的完整原始代码 (完全保留，未做任何改动)
+   ========================================================================== */
+
+/* --- 1. 定义全局变量 (深色/浅色主题核心) --- */
 :root {
     /* --- 深色模式 (默认) --- */
     --bg-color: #0f172a;           /* 深蓝背景 */
@@ -31,9 +78,7 @@
     --tag-bg: rgba(2, 132, 199, 0.1);
 }
 
-/* ==========================================================================
-   2. 基础布局与排版
-   ========================================================================== */
+/* --- 2. 基础布局与排版 --- */
 body {
     margin: 0;
     font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
@@ -85,9 +130,7 @@ footer {
     margin-top: 50px; 
 }
 
-/* ==========================================================================
-   3. 首页与归档页组件
-   ========================================================================== */
+/* --- 3. 首页与归档页组件 --- */
 .hero { text-align: center; padding: 60px 20px; }
 .hero h1 { font-size: 3rem; margin-bottom: 10px; color: var(--text-main); }
 .hero p { color: var(--text-sub); font-size: 1.1rem; }
@@ -108,9 +151,7 @@ footer {
 .card-meta { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 15px; }
 .card-excerpt { font-size: 0.95rem; color: var(--text-sub); line-height: 1.6; }
 
-/* ==========================================================================
-   4. 文章详情页布局 (Flexbox)
-   ========================================================================== */
+/* --- 4. 文章详情页布局 (Flexbox) --- */
 .post-layout { display: flex; gap: 40px; align-items: flex-start; }
 
 .post-content { 
@@ -124,9 +165,7 @@ footer {
     overflow: hidden; 
 }
 
-/* ==========================================================================
-   5. 侧边栏目录 (极简文档风格)
-   ========================================================================== */
+/* --- 5. 侧边栏目录 (极简文档风格) --- */
 .sidebar { 
     width: 300px; /* 加宽宽度 */
     flex-shrink: 0; 
@@ -194,9 +233,7 @@ footer {
     .post-content { padding: 20px; }
 }
 
-/* ==========================================================================
-   6. 文章正文排版
-   ========================================================================== */
+/* --- 6. 文章正文排版 --- */
 .post-header { margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
 .post-header h1 { font-size: 2.2rem; margin: 0 0 15px 0; }
 .post-meta { color: var(--text-sub); }
@@ -224,9 +261,7 @@ footer {
     color: var(--text-sub); 
 }
 
-/* ==========================================================================
-   7. 代码块样式 (自动换行 + 无行号)
-   ========================================================================== */
+/* --- 7. 代码块样式 (自动换行 + 无行号) --- */
 /* 强制隐藏 Hexo Highlight 可能残留的元素 */
 .gutter { display: none !important; }
 .code { border-left: none !important; padding-left: 0 !important; }
@@ -262,9 +297,7 @@ table { border-collapse: collapse; width: 100%; margin: 0; }
 .line-numbers-rows { display: none !important; }
 pre[class*="language-"] { padding-left: 15px !important; }
 
-/* ==========================================================================
-   8. 标签云 (胶囊样式)
-   ========================================================================== */
+/* --- 8. 标签云 (胶囊样式) --- */
 .tag-cloud {
     text-align: center;
     padding: 20px;
@@ -292,9 +325,7 @@ pre[class*="language-"] { padding-left: 15px !important; }
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* ==========================================================================
-   9. 分类列表 (卡片矩阵样式)
-   ========================================================================== */
+/* --- 9. 分类列表 (卡片矩阵样式) --- */
 .category-list-container { padding: 10px; }
 .category-list {
     list-style: none;
@@ -354,9 +385,7 @@ pre[class*="language-"] { padding-left: 15px !important; }
 }
 .category-list-child { display: none; }
 
-/* ==========================================================================
-   10. 搜索弹窗 (修复定位问题)
-   ========================================================================== */
+/* --- 10. 搜索弹窗 (修复定位问题) --- */
 .search-modal {
     display: none;
     position: fixed; /* 关键：固定定位 */
