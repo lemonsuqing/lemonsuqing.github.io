@@ -1,24 +1,60 @@
-<section class="post-content" style="max-width: 800px; margin: 0 auto;">
-    <h1 style="text-align:center; margin-bottom:40px; border-bottom:1px solid var(--border); padding-bottom:20px;">
-        <% if(is_category()){ %>
-            <i class="far fa-folder-open"></i> 分类: <%= page.category %>
-        <% } else if(is_tag()){ %>
-            <i class="fas fa-tag"></i> 标签: <%= page.tag %>
-        <% } else { %>
-            <i class="fas fa-history"></i> 文章归档
-        <% } %>
-    </h1>
+<!-- 归档/分类/标签 列表页 -->
+<section>
+    <!-- 头部标题区 -->
+    <div style="text-align:center; padding: 40px 0; margin-bottom: 20px;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">
+            <% if(is_category()){ %>
+                <i class="far fa-folder-open" style="color:var(--accent)"></i> <%= page.category %>
+            <% } else if(is_tag()){ %>
+                <i class="fas fa-tag" style="color:var(--accent)"></i> <%= page.tag %>
+            <% } else if(is_archive()){ %>
+                <i class="fas fa-history" style="color:var(--accent)"></i> 文章归档
+            <% } %>
+        </h1>
+        <p style="color:var(--text-sub)">
+            共找到 <%= page.posts.length %> 篇相关文章
+        </p>
+    </div>
 
-    <div class="archive-list">
+    <!-- 文章卡片网格 (完全复用首页样式) -->
+    <div class="post-grid">
         <% page.posts.sort('date', -1).forEach(function(post){ %>
-            <div class="archive-item">
-                <div class="archive-date"><%= date(post.date, 'YYYY-MM-DD') %></div>
-                <a href="<%- url_for(post.path) %>" class="archive-title"><%= post.title %></a>
-            </div>
+            <a href="<%- url_for(post.path) %>" class="card">
+                <div class="card-title"><%= post.title %></div>
+                <div class="card-meta">
+                    <!-- 日期 -->
+                    <span><i class="far fa-calendar"></i> <%= date(post.date, 'YYYY-MM-DD') %></span>
+                    
+                    <!-- 分类 (如果有) -->
+                    <% if(post.categories && post.categories.length > 0){ %>
+                        <span style="margin-left:10px;"><i class="far fa-folder"></i> <%= post.categories.data[0].name %></span>
+                    <% } %>
+                </div>
+                
+                <!-- 摘要 -->
+                <div class="card-excerpt">
+                    <% var excerpt = post.excerpt || post.content.replace(/<[^>]+>/g,"").substring(0, 80) + "..." %>
+                    <%= excerpt %>
+                </div>
+
+                <!-- 底部标签展示 (新增) -->
+                <% if(post.tags && post.tags.length > 0){ %>
+                    <div style="margin-top:15px; padding-top:10px; border-top:1px dashed var(--border);">
+                        <% post.tags.forEach(function(tag){ %>
+                            <span style="font-size:0.8rem; color:var(--accent); margin-right:10px;">#<%= tag.name %></span>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </a>
         <% }) %>
     </div>
 
+    <!-- 分页 -->
     <div class="pagination">
-        <%- paginator({ prev_text: '<', next_text: '>' }) %>
+        <%- paginator({
+            prev_text: '<i class="fas fa-chevron-left"></i> 上一页',
+            next_text: '下一页 <i class="fas fa-chevron-right"></i>',
+            escape: false
+        }) %>
     </div>
 </section>

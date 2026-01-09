@@ -1,0 +1,35 @@
+<!-- 通用单页模版 -->
+<section class="post-content" style="max-width: 900px; margin: 0 auto; min-height: 60vh;">
+    
+    <div class="post-header" style="text-align: center; border-bottom: none;">
+        <h1><%= page.title %></h1>
+    </div>
+
+    <div class="post-body">
+        <!-- 场景1：标签页 (Tags) -->
+        <% if (page.type === "tags") { %>
+            <div class="tag-cloud">
+                <%- tagcloud({
+                    min_font: 16, max_font: 32, amount: 200, color: true, 
+                    start_color: '#94a3b8', end_color: '#38bdf8', unit: 'px'
+                }) %>
+            </div>
+
+        <!-- 场景2：分类页 (Categories) -->
+        <% } else if (page.type === "categories") { %>
+            <div class="category-list-container">
+                <%- list_categories({
+                    show_count: true,  // 显示文章数量
+                    style: 'list',     // 列表样式
+                    class: 'category', // CSS 类名前缀
+                    depth: 2           // 显示层级
+                }) %>
+            </div>
+
+        <!-- 场景3：普通页面 -->
+        <% } else { %>
+            <%- page.content %>
+        <% } %>
+    </div>
+
+</section>
