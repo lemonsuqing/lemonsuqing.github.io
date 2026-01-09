@@ -1,0 +1,48 @@
+<!-- Hero 区域 -->
+<section class="hero">
+    <h1>Welcome to <%= config.title %></h1>
+    <p><%= config.subtitle || "分享技术，记录生活，探索未知。" %></p>
+</section>
+
+<!-- 最新文章 -->
+<section>
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px;">
+        <h2 style="margin:0;"><i class="fas fa-fire" style="color:var(--accent)"></i> 最新文章</h2>
+    </div>
+
+    <div class="post-grid">
+        <% if (page.posts.length > 0) { %>
+            <% page.posts.forEach(function(post){ %>
+                <a href="<%- url_for(post.path) %>" class="card">
+                    <div class="card-title"><%= post.title %></div>
+                    <div class="card-meta">
+                        <span><i class="far fa-calendar"></i> <%= date(post.date, 'YYYY-MM-DD') %></span>
+                        <% if(post.categories && post.categories.length > 0){ %>
+                            <span style="margin-left:10px;"><i class="far fa-folder"></i> <%= post.categories.data[0].name %></span>
+                        <% } %>
+                    </div>
+                    <div class="card-excerpt">
+                        <% var excerpt = post.excerpt || post.content.replace(/<[^>]+>/g,"").substring(0, 80) + "..." %>
+                        <%= excerpt %>
+                    </div>
+                </a>
+            <% }) %>
+        <% } else { %>
+            <div style="grid-column: 1 / -1; text-align:center; padding: 50px; color: var(--text-sub);">
+                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                <p>这里空空如也，快去写第一篇博客吧！</p>
+            </div>
+        <% } %>
+    </div>
+    
+    <!-- 分页 -->
+    <% if (page.total > 1){ %>
+        <div class="pagination">
+            <%- paginator({
+                prev_text: '<i class="fas fa-chevron-left"></i> 上一页',
+                next_text: '下一页 <i class="fas fa-chevron-right"></i>',
+                escape: false
+            }) %>
+        </div>
+    <% } %>
+</section>
