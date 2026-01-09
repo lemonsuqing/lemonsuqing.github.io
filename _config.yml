@@ -46,14 +46,16 @@ relative_link: false
 future: true
 syntax_highlighter: highlight.js
 highlight:
+  enable: true
   line_number: true
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
 prismjs:
+  enable: true
   preprocess: true
-  line_number: true
+  line_number: false
   tab_replace: ''
 
 # Home page setting
@@ -104,7 +106,7 @@ theme: my-theme
 deploy:
   type: git
   repo: git@github.com:lemonsuqing/lemonsuqing.github.io.git
-  branch: main
+  branch: gh-pages
 
 # hexo-admin authentification
 admin:
