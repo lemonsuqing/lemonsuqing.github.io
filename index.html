@@ -5,52 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lemonsuqing&#39;s blog</title>
     <!-- 图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Fancybox -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
-    
+
     <!-- 代码高亮 (JS切换主题时会修改这个href) -->
     <link id="highlight-css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
-    
+
     <!-- 自定义样式 -->
     <link rel="stylesheet" href="/css/style.css">
 <meta name="generator" content="Hexo 8.1.1"></head>
 <body>
-    <!-- 仅在深色模式下可见的星空背景 -->
-    <div class="universe-background">
-        <!-- 基础三层星星 -->
-        <div id="stars"></div>
-        <div id="stars2"></div>
-        <div id="stars3"></div>
-        <!-- 动态星云 (炫酷的核心) -->
+    <!-- 星空背景 -->
+    <div class="starry-background">
+        <div class="stars"></div>
         <div class="nebula nebula-1"></div>
         <div class="nebula nebula-2"></div>
         <div class="nebula nebula-3"></div>
-        <!-- 流星 -->
-        <div class="shooting-stars">
-            <span></span><span></span><span></span><span></span>
-        </div>
+        <div class="nebula nebula-4"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
     </div>
 
     <!-- 导航栏 -->
     <nav>
-        <a href="/" class="logo">🍋 lemonsuqing&#39;s blog</a>
+        <a href="/" class="logo"><span>🍋</span> lemonsuqing&#39;s blog</a>
         <div class="menu">
             <a href="/"><i class="fas fa-home"></i> 首页</a>
             <a href="/categories"><i class="fas fa-folder-open"></i> 分类</a>
             <a href="/tags"><i class="fas fa-tags"></i> 标签</a>
             <a href="/archives"><i class="fas fa-archive"></i> 归档</a>
-            
+
             <a href="javascript:;" onclick="toggleSearch()"><i class="fas fa-search"></i> 搜索</a>
-            
+
             <!-- 主题切换 -->
             <a href="javascript:;" onclick="toggleTheme()" class="theme-switch" title="切换主题">
                 <i id="theme-icon" class="fas fa-moon"></i>
             </a>
 
             <!-- 管理员按钮 (默认隐藏，脚本控制显示) -->
-            <a href="/admin" target="_blank" class="admin-btn" style="display:none; margin-left:10px; color:#facc15; font-weight:bold;">
-                <i class="fas fa-user-cog"></i> 写博客
+            <a href="/admin" target="_blank" class="admin-btn" style="display:none;">
+                <i class="fas fa-pen-fancy"></i> 写博客
             </a>
         </div>
     </nav>
@@ -64,8 +63,10 @@
 
 <!-- 最新文章 -->
 <section>
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:20px;">
-        <h2 style="margin:0;"><i class="fas fa-fire" style="color:var(--accent)"></i> 最新文章</h2>
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:30px; padding-bottom:20px; border-bottom: 2px solid var(--border-color);">
+        <h2 style="margin:0; font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--text-primary);">
+            <i class="fas fa-fire" style="color: var(--accent-gold); margin-right: 10px;"></i> 最新文章
+        </h2>
     </div>
 
     <div class="post-grid">
@@ -76,12 +77,12 @@
                     <div class="card-meta">
                         <span><i class="far fa-calendar"></i> 2026-01-09</span>
                         
-                            <span style="margin-left:10px;"><i class="far fa-folder"></i> 测试</span>
+                            <span><i class="far fa-folder"></i> 测试</span>
                         
                     </div>
                     <div class="card-excerpt">
                         
-                        Welcome to Hexo! This is your very first post. Check documentation for more info...
+                        Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any pro...
                     </div>
                 </a>
             
@@ -90,13 +91,13 @@
                     <div class="card-meta">
                         <span><i class="far fa-calendar"></i> 2024-01-09</span>
                         
-                            <span style="margin-left:10px;"><i class="far fa-folder"></i> 技术笔记</span>
+                            <span><i class="far fa-folder"></i> 技术笔记</span>
                         
                     </div>
                     <div class="card-excerpt">
                         
                         编写第一个内核驱动 (Hello World)1. 核心概念：什么是内核模块 (.ko)？
-裸机开发：你写好代码，编译成固件，烧进去。如果要修改一个 LED 的...
+裸机开发：你写好代码，编译成固件，烧进去。如果要修改一个 LED 的闪烁频率，你必须重新编译整个工程，重新烧...
                     </div>
                 </a>
             
@@ -105,7 +106,7 @@
                     <div class="card-meta">
                         <span><i class="far fa-calendar"></i> 2024-01-09</span>
                         
-                            <span style="margin-left:10px;"><i class="far fa-folder"></i> 技术笔记</span>
+                            <span><i class="far fa-folder"></i> 技术笔记</span>
                         
                     </div>
                     <div class="card-excerpt">
@@ -113,13 +114,14 @@
                         📘 嵌入式 Linux 从零构建全栈手册 (基于 Vexpress-A9)目录索引：
 
 环境搭建：地基与工具链
-U-Boot 移植：编译、裁剪与设备树命令开启...
+U-Boot 移植：编译、裁剪与设备树命令开启
+Linux 内核：源码下载、配置、编译...
                     </div>
                 </a>
             
         
     </div>
-    
+
     <!-- 分页 -->
     
 </section>
@@ -127,7 +129,7 @@ U-Boot 移植：编译、裁剪与设备树命令开启...
 
     <footer>
         <p>&copy; 2026 lemonsuqing</p>
-        <p>Powered by Hexo & My Custom Theme</p>
+        <p>Crafted with <i class="fas fa-heart" style="color: var(--accent-gold);"></i> using Hexo</p>
     </footer>
 
     <!-- 搜索弹窗 -->
@@ -135,9 +137,9 @@ U-Boot 移植：编译、裁剪与设备树命令开启...
         <div class="search-box">
             <div class="search-header">
                 <h3><i class="fas fa-search"></i> 站内搜索</h3>
-                <button onclick="toggleSearch()"><i class="fas fa-times" style="color:var(--text-main)"></i></button>
+                <button onclick="toggleSearch()"><i class="fas fa-times"></i></button>
             </div>
-            <input type="text" id="local-search-input" placeholder="输入关键词...">
+            <input type="text" id="local-search-input" placeholder="输入关键词搜索文章...">
             <div id="local-search-result"></div>
         </div>
     </div>
@@ -145,10 +147,10 @@ U-Boot 移植：编译、裁剪与设备树命令开启...
     <!-- 脚本 -->
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
     <script src="/js/search.js"></script>
-    
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. Fancybox
+            // 1. Fancybox 图片灯箱
             const postImages = document.querySelectorAll('.post-body img');
             postImages.forEach(function(img) {
                 const outer = img.outerHTML;
@@ -162,11 +164,11 @@ U-Boot 移植：编译、裁剪与设备树命令开启...
                 img.parentNode.replaceChild(newTag, img);
             });
             Fancybox.bind("[data-fancybox]", {});
-            
+
             // 2. 初始化主题
             initTheme();
-            
-            // 3. 核心：本地环境显示“写博客”按钮
+
+            // 3. 本地环境显示"写博客"按钮
             if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                 document.querySelector('.admin-btn').style.display = 'inline-flex';
             }
@@ -176,8 +178,10 @@ U-Boot 移植：编译、裁剪与设备树命令开启...
             const modal = document.getElementById('search-modal');
             if (modal.style.display === 'flex') {
                 modal.style.display = 'none';
+                document.body.style.overflow = '';
             } else {
                 modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
                 setTimeout(() => document.getElementById('local-search-input').focus(), 100);
             }
         }
@@ -203,14 +207,24 @@ U-Boot 移植：编译、裁剪与设备树命令开启...
             const icon = document.getElementById('theme-icon');
             icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
         }
-        
+
         function updateHighlightStyle(theme) {
             const link = document.getElementById('highlight-css');
             // 深色用 Tomorrow Night，浅色用 One Light
-            link.href = theme === 'dark' 
-                ? 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css' 
+            link.href = theme === 'dark'
+                ? 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css'
                 : 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-one-light.min.css';
         }
+
+        // ESC 键关闭搜索弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('search-modal');
+                if (modal.style.display === 'flex') {
+                    toggleSearch();
+                }
+            }
+        });
     </script>
 </body>
 </html>
