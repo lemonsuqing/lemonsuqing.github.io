@@ -19,9 +19,12 @@
         <a href="/" class="logo">🚀 lemonsuqing&#39;s blog</a>
         <div class="menu">
             <a href="/"><i class="fas fa-home"></i> 首页</a>
-            <a href="/archives"><i class="fas fa-archive"></i> 归档</a>
             
-            <!-- 搜索按钮 -->
+            <!-- 调整一下顺序，把分类和标签放在一起 -->
+            <a href="/categories"><i class="fas fa-folder-open"></i> 分类</a> <!-- 新增 -->
+            <a href="/tags"><i class="fas fa-tags"></i> 标签</a>
+            
+            <a href="/archives"><i class="fas fa-archive"></i> 归档</a>
             <a href="javascript:;" onclick="toggleSearch()"><i class="fas fa-search"></i> 搜索</a>
             
             <!-- 后台入口 (仅本地可见) -->
@@ -36,22 +39,61 @@
 
     <!-- 主体内容 -->
     <main class="container">
-        <section class="post-content" style="max-width: 800px; margin: 0 auto;">
-    <h1 style="text-align:center; margin-bottom:40px; border-bottom:1px solid var(--border); padding-bottom:20px;">
-        
-            <i class="far fa-folder-open"></i> 分类: 技术笔记
-        
-    </h1>
+        <!-- 归档/分类/标签 列表页 -->
+<section>
+    <!-- 头部标题区 -->
+    <div style="text-align:center; padding: 40px 0; margin-bottom: 20px;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">
+            
+                <i class="far fa-folder-open" style="color:var(--accent)"></i> 技术笔记
+            
+        </h1>
+        <p style="color:var(--text-sub)">
+            共找到 1 篇相关文章
+        </p>
+    </div>
 
-    <div class="archive-list">
+    <!-- 文章卡片网格 (完全复用首页样式) -->
+    <div class="post-grid">
         
-            <div class="archive-item">
-                <div class="archive-date">2024-01-09</div>
-                <a href="/2024/01/09/1%E5%B5%8C%E5%85%A5%E5%BC%8F%20Linux%20%E4%BB%8E%E9%9B%B6%E6%9E%84%E5%BB%BA%E5%85%A8%E6%A0%88%E6%89%8B%E5%86%8C/" class="archive-title">嵌入式 Linux 从零构建全栈手册 (基于 Vexpress-A9)</a>
-            </div>
+            <a href="/2024/01/09/1%E5%B5%8C%E5%85%A5%E5%BC%8F%20Linux%20%E4%BB%8E%E9%9B%B6%E6%9E%84%E5%BB%BA%E5%85%A8%E6%A0%88%E6%89%8B%E5%86%8C/" class="card">
+                <div class="card-title">嵌入式 Linux 从零构建全栈手册 (基于 Vexpress-A9)</div>
+                <div class="card-meta">
+                    <!-- 日期 -->
+                    <span><i class="far fa-calendar"></i> 2024-01-09</span>
+                    
+                    <!-- 分类 (如果有) -->
+                    
+                        <span style="margin-left:10px;"><i class="far fa-folder"></i> 技术笔记</span>
+                    
+                </div>
+                
+                <!-- 摘要 -->
+                <div class="card-excerpt">
+                    
+                    📘 嵌入式 Linux 从零构建全栈手册 (基于 Vexpress-A9)目录索引：
+
+环境搭建：地基与工具链
+U-Boot 移植：编译、裁剪与设备树命令开启...
+                </div>
+
+                <!-- 底部标签展示 (新增) -->
+                
+                    <div style="margin-top:15px; padding-top:10px; border-top:1px dashed var(--border);">
+                        
+                            <span style="font-size:0.8rem; color:var(--accent); margin-right:10px;">#嵌入式</span>
+                        
+                            <span style="font-size:0.8rem; color:var(--accent); margin-right:10px;">#Linux</span>
+                        
+                            <span style="font-size:0.8rem; color:var(--accent); margin-right:10px;">#ARM</span>
+                        
+                    </div>
+                
+            </a>
         
     </div>
 
+    <!-- 分页 -->
     <div class="pagination">
         <span class="page-number current">1</span>
     </div>

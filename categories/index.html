@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lemonsuqing&#39;s blog</title>
+    <title>文章分类 | lemonsuqing&#39;s blog</title>
     <!-- FontAwesome 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Fancybox 图片放大库 CSS -->
@@ -39,92 +39,24 @@
 
     <!-- 主体内容 -->
     <main class="container">
-        <!-- 归档/分类/标签 列表页 -->
-<section>
-    <!-- 头部标题区 -->
-    <div style="text-align:center; padding: 40px 0; margin-bottom: 20px;">
-        <h1 style="font-size: 2.5rem; margin-bottom: 10px;">
-            
-                <i class="fas fa-history" style="color:var(--accent)"></i> 文章归档
-            
-        </h1>
-        <p style="color:var(--text-sub)">
-            共找到 2 篇相关文章
-        </p>
+        <!-- 通用单页模版 -->
+<section class="post-content" style="max-width: 900px; margin: 0 auto; min-height: 60vh;">
+    
+    <div class="post-header" style="text-align: center; border-bottom: none;">
+        <h1>文章分类</h1>
     </div>
 
-    <!-- 文章卡片网格 (完全复用首页样式) -->
-    <div class="post-grid">
+    <div class="post-body">
+        <!-- 场景1：标签页 (Tags) -->
         
-            <a href="/2026/01/09/hello-world/" class="card">
-                <div class="card-title">Hello World</div>
-                <div class="card-meta">
-                    <!-- 日期 -->
-                    <span><i class="far fa-calendar"></i> 2026-01-09</span>
-                    
-                    <!-- 分类 (如果有) -->
-                    
-                        <span style="margin-left:10px;"><i class="far fa-folder"></i> 测试</span>
-                    
-                </div>
-                
-                <!-- 摘要 -->
-                <div class="card-excerpt">
-                    
-                    Welcome to Hexo! This is your very first post. Check documentation for more info...
-                </div>
+            <div class="category-list-container">
+                <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a><span class="category-list-count">1</span></li></ul>
+            </div>
 
-                <!-- 底部标签展示 (新增) -->
-                
-                    <div style="margin-top:15px; padding-top:10px; border-top:1px dashed var(--border);">
-                        
-                            <span style="font-size:0.8rem; color:var(--accent); margin-right:10px;">#test</span>
-                        
-                    </div>
-                
-            </a>
-        
-            <a href="/2024/01/09/1%E5%B5%8C%E5%85%A5%E5%BC%8F%20Linux%20%E4%BB%8E%E9%9B%B6%E6%9E%84%E5%BB%BA%E5%85%A8%E6%A0%88%E6%89%8B%E5%86%8C/" class="card">
-                <div class="card-title">嵌入式 Linux 从零构建全栈手册 (基于 Vexpress-A9)</div>
-                <div class="card-meta">
-                    <!-- 日期 -->
-                    <span><i class="far fa-calendar"></i> 2024-01-09</span>
-                    
-                    <!-- 分类 (如果有) -->
-                    
-                        <span style="margin-left:10px;"><i class="far fa-folder"></i> 技术笔记</span>
-                    
-                </div>
-                
-                <!-- 摘要 -->
-                <div class="card-excerpt">
-                    
-                    📘 嵌入式 Linux 从零构建全栈手册 (基于 Vexpress-A9)目录索引：
-
-环境搭建：地基与工具链
-U-Boot 移植：编译、裁剪与设备树命令开启...
-                </div>
-
-                <!-- 底部标签展示 (新增) -->
-                
-                    <div style="margin-top:15px; padding-top:10px; border-top:1px dashed var(--border);">
-                        
-                            <span style="font-size:0.8rem; color:var(--accent); margin-right:10px;">#嵌入式</span>
-                        
-                            <span style="font-size:0.8rem; color:var(--accent); margin-right:10px;">#Linux</span>
-                        
-                            <span style="font-size:0.8rem; color:var(--accent); margin-right:10px;">#ARM</span>
-                        
-                    </div>
-                
-            </a>
+        <!-- 场景3：普通页面 -->
         
     </div>
 
-    <!-- 分页 -->
-    <div class="pagination">
-        <span class="page-number current">1</span>
-    </div>
 </section>
     </main>
 
